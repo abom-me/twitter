@@ -1,19 +1,21 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter/common/rounded_button.dart';
 import 'package:twitter/constans/ui_constants.dart';
+import 'package:twitter/features/auth/controller/auth_controller.dart';
 import 'package:twitter/features/auth/view/signup_view.dart';
 import 'package:twitter/features/auth/widgets/auth_field.dart';
 import 'package:twitter/theme/pallete.dart';
 
-class LoginView extends StatefulWidget {
+class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});
 static route()=>MaterialPageRoute(builder: (context)=>const LoginView());
   @override
-  State<LoginView> createState() => _LoginViewState();
+  ConsumerState<LoginView> createState() => _LoginViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _LoginViewState extends ConsumerState<LoginView> {
   final appbar = UIConstants.appBar();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -24,13 +26,16 @@ class _LoginViewState extends State<LoginView> {
     // TODO: implement dispose
     super.dispose();
   }
-
+void onLogin(){
+    ref.watch(authControllerProvider.notifier).login(email: emailController.text, password: passwordController.text, context: context);
+}
   @override
   Widget build(BuildContext context) {
+    final isLoading=    ref.watch(authControllerProvider);
     return Scaffold(
       appBar: appbar,
       body: Center(
-        child: SingleChildScrollView(
+        child: isLoading?CircularProgressIndicator(): SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -54,7 +59,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: RoundedSmallButton(onTap: () {}, backgroundColor: Pallete.whiteColor,textColor: Pallete.backgroundColor,
+                  child: RoundedSmallButton(onTap: onLogin, backgroundColor: Pallete.whiteColor,textColor: Pallete.backgroundColor,
                   child: "Login"),
                 ),
                 const SizedBox(

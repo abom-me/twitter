@@ -10,8 +10,11 @@ class RoundedSmallButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Chip(label: Text(child,style: TextStyle(color: textColor,fontSize: 17),),
-    backgroundColor:backgroundColor ,
-    labelPadding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),);
+    return InkWell(
+      onTap: onTap,
+      child: Chip(label: Text(child,style: TextStyle(color: textColor,fontSize: 17),),
+      backgroundColor:backgroundColor ,
+      labelPadding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),),
+    );
   }
 }

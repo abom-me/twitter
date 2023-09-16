@@ -1,20 +1,22 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:twitter/features/auth/controller/auth_controller.dart';
 
 import '../../../common/rounded_button.dart';
 import '../../../constans/ui_constants.dart';
 import '../../../theme/pallete.dart';
 import '../widgets/auth_field.dart';
 
-class SignupView extends StatefulWidget {
+class SignupView extends ConsumerStatefulWidget {
   const SignupView({super.key});
   static route()=>MaterialPageRoute(builder: (context)=>const SignupView());
 
   @override
-  State<SignupView> createState() => _SignupViewState();
+  ConsumerState<SignupView> createState() => _SignupViewState();
 }
 
-class _SignupViewState extends State<SignupView> {
+class _SignupViewState extends ConsumerState<SignupView> {
   final appbar = UIConstants.appBar();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -25,13 +27,17 @@ class _SignupViewState extends State<SignupView> {
     // TODO: implement dispose
     super.dispose();
   }
+void onSignUp(){
 
+   ref.read(authControllerProvider.notifier).signUp(email: emailController.text, password: passwordController.text, context: context) ;
+}
   @override
   Widget build(BuildContext context) {
+    final isLoading=ref.watch(authControllerProvider);
     return Scaffold(
       appBar: appbar,
       body: Center(
-        child: SingleChildScrollView(
+        child:isLoading?const CircularProgressIndicator(): SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -55,7 +61,7 @@ class _SignupViewState extends State<SignupView> {
                 ),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: RoundedSmallButton(onTap: () {}, backgroundColor: Pallete.whiteColor,textColor: Pallete.backgroundColor,
+                  child: RoundedSmallButton(onTap: onSignUp, backgroundColor: Pallete.whiteColor,textColor: Pallete.backgroundColor,
                       child: "Login"),
                 ),
                 const SizedBox(
