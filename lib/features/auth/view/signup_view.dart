@@ -1,19 +1,20 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:twitter/common/rounded_button.dart';
-import 'package:twitter/constans/ui_constants.dart';
-import 'package:twitter/features/auth/view/signup_view.dart';
-import 'package:twitter/features/auth/widgets/auth_field.dart';
-import 'package:twitter/theme/pallete.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
-static route()=>MaterialPageRoute(builder: (context)=>const LoginView());
+import '../../../common/rounded_button.dart';
+import '../../../constans/ui_constants.dart';
+import '../../../theme/pallete.dart';
+import '../widgets/auth_field.dart';
+
+class SignupView extends StatefulWidget {
+  const SignupView({super.key});
+  static route()=>MaterialPageRoute(builder: (context)=>const SignupView());
+
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<SignupView> createState() => _SignupViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _SignupViewState extends State<SignupView> {
   final appbar = UIConstants.appBar();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -55,18 +56,18 @@ class _LoginViewState extends State<LoginView> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: RoundedSmallButton(onTap: () {}, backgroundColor: Pallete.whiteColor,textColor: Pallete.backgroundColor,
-                  child: "Login"),
+                      child: "Login"),
                 ),
                 const SizedBox(
                   height: 40,
                 ),
                 RichText(text: TextSpan(text: "Dont't have an account?",
-                children: [
-                    TextSpan(text: " SignUp",style: TextStyle(fontSize: 16,color: Pallete.blueColor))
-                ],style: TextStyle(fontSize: 16,color: Pallete.whiteColor),
-                recognizer: TapGestureRecognizer()..onTap=(){
-Navigator.push(context, SignupView.route());
-                },
+                  children:  const [
+                    TextSpan(text: " LogIn",style: TextStyle(fontSize: 16,color: Pallete.blueColor))
+                  ],style: const TextStyle(fontSize: 16,color: Pallete.whiteColor),
+                  recognizer: TapGestureRecognizer()..onTap=(){
+
+                  },
                 ),
                 ),
 
